@@ -16,4 +16,3 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 console.log(prettyPrint(test.root));
-// console.log(test);
