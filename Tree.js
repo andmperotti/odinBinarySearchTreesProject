@@ -54,4 +54,39 @@ export default class {
 
     return root;
   }
+
+  delete(value, node = this.root) {
+    if (node === null) {
+      return node;
+    }
+
+    if (value > node.data) {
+      node.right = this.delete(value, node.right);
+    } else if (value < node.data) {
+      node.left = this.delete(value, node.left);
+    } else {
+      if (node.left === null && node.right === null) {
+        return null;
+      }
+      if (node.left === null && node.right) {
+        node = node.right;
+      }
+      if (node.left && node.right === null) {
+        node = node.left;
+      }
+      let next = getNext(node);
+      node.data = next.data;
+      node.right = this.delete(next.data, node.right);
+    }
+
+    function getNext(node) {
+      node = node.right;
+      while (node !== null && node.left !== null) {
+        node = node.left;
+      }
+      return node;
+    }
+
+    return node;
+  }
 }
