@@ -89,4 +89,17 @@ export default class {
 
     return node;
   }
+
+  find(value, root = this.root) {
+    while (root !== null && root.data !== value) {
+      if (value > root.data) {
+        root = root.right;
+      } else {
+        root = root.left;
+      }
+    }
+    if (root.data === value) {
+      return root;
+    }
+  }
 }
