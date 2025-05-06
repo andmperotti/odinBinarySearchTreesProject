@@ -10,3 +10,7 @@ console.log(test.root.right.left.right.right); //should be a node with value 28
 test.prettyPrint(test.root);
 test.delete(8);
 test.prettyPrint(test.root);
+console.log(test.find(28));
+test.levelOrder((e) => console.log(e));
+test.levelOrder((e) => (e = e * e));
+test.prettyPrint(test.root);

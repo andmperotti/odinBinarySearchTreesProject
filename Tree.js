@@ -102,4 +102,34 @@ export default class {
       return root;
     }
   }
+
+  //iteration or recurision
+  levelOrder(callback, root = this.root) {
+    //iterative approach from https://www.youtube.com/watch?v=86g8jAQug04 :
+    //if the root is empty
+    if (root === null) {
+      return;
+    }
+
+    let queue = [];
+    queue.push(root);
+    while (queue.length > 0) {
+      let current = queue[0];
+      callback(current);
+      if (current.left !== null) {
+        queue.push(current.left);
+      }
+      if (current.right !== null) {
+        queue.push(current.right);
+      }
+      //remove the current node from the queue
+      queue.shift();
+    }
+
+    //recursive:
+    //if no callback throw an error
+
+    //build an array of the nodes, so you can later call the callback on each one using a queue
+    //while loop with if and else
+  }
 }
