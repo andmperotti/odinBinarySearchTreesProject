@@ -67,16 +67,15 @@ export default class {
     } else {
       if (node.left === null && node.right === null) {
         return null;
-      }
-      if (node.left === null && node.right) {
+      } else if (node.left === null && node.right) {
         node = node.right;
-      }
-      if (node.left && node.right === null) {
+      } else if (node.left && node.right === null) {
         node = node.left;
+      } else {
+        let next = getNext(node);
+        node.data = next.data;
+        node.right = this.delete(next.data, node.right);
       }
-      let next = getNext(node);
-      node.data = next.data;
-      node.right = this.delete(next.data, node.right);
     }
 
     function getNext(node) {
