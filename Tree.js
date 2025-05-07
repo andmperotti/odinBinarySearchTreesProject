@@ -97,8 +97,10 @@ export default class {
         root = root.left;
       }
     }
-    if (root.data === value) {
+    if (root?.data === value) {
       return root;
+    } else {
+      return null;
     }
   }
 
@@ -171,5 +173,28 @@ export default class {
       this.postOrder(callback, root.right);
     }
     callback(root);
+  }
+
+  //The number of edges on the longest path from that node down to a leaf in its subtree.
+  height(value, root = this.root) {
+    //so find the node first, then calculate how many subtrees it has
+    let foundNode = this.find(value, root);
+    if (foundNode === null) {
+      return null;
+    } else {
+      function findHeight(node) {
+        if (node.left === null && node.right === null) {
+          return 0;
+        }
+        if (node.left && !node.right) {
+          return 1 + findHeight(node.left);
+        } else if (node.right && !node.left) {
+          return 1 + findHeight(node.right);
+        } else {
+          return 1 + Math.max(findHeight(node.left), findHeight(node.right));
+        }
+      }
+      return findHeight(foundNode);
+    }
   }
 }
