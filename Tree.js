@@ -102,14 +102,10 @@ export default class {
     }
   }
 
-  //iteration or recurision
   levelOrder(callback, root = this.root) {
-    //iterative approach from https://www.youtube.com/watch?v=86g8jAQug04 :
-    //if callback is empty
     if (!callback) {
       throw new Error("No Callback given");
     }
-    //if the root is empty
     if (root === null) {
       return;
     }
@@ -124,8 +120,28 @@ export default class {
       if (current.right !== null) {
         queue.push(current.right);
       }
-      //remove the current node from the queue
       queue.shift();
     }
   }
+
+  inOrder(callback, root = this.root) {
+    if (root === null) {
+      return null;
+    }
+    if (!callback) {
+      throw new Error("Error argument is empty");
+    }
+
+    if (root.left !== null) {
+      this.inOrder(callback, root.left);
+    }
+    callback(root);
+    if (root.right !== null) {
+      this.inOrder(callback, root.right);
+    }
+  }
+
+  preOrder(callback, root = this.root) {}
+
+  postOrder(callback, root = this.root) {}
 }
