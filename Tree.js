@@ -182,19 +182,25 @@ export default class {
     if (foundNode === null) {
       return null;
     } else {
-      function findHeight(node) {
-        if (node.left === null && node.right === null) {
-          return 0;
-        }
-        if (node.left && !node.right) {
-          return 1 + findHeight(node.left);
-        } else if (node.right && !node.left) {
-          return 1 + findHeight(node.right);
-        } else {
-          return 1 + Math.max(findHeight(node.left), findHeight(node.right));
-        }
-      }
-      return findHeight(foundNode);
+      return this.findHeight(foundNode);
+    }
+  }
+
+  findHeight(node) {
+    if (node === null) {
+      return null;
+    }
+    if (node.left === null && node.right === null) {
+      return 0;
+    }
+    if (node.left && !node.right) {
+      return 1 + this.findHeight(node.left);
+    } else if (node.right && !node.left) {
+      return 1 + this.findHeight(node.right);
+    } else {
+      return (
+        1 + Math.max(this.findHeight(node.left), this.findHeight(node.right))
+      );
     }
   }
 
@@ -212,5 +218,33 @@ export default class {
       let recursive = this.depth(value, root.left);
       return recursive !== null ? recursive + 1 : null;
     }
+  }
+
+  //when the height of a nodes left and right subtrees are only different by 1
+  //so calculate the height of node.left and node.right and if the difference is greater than 1 return false
+  //iterate through all nodes in the tree and make this calculation
+  //can't reuse height or find because they require a value.
+  isBalanced(root = this.root) {
+    //empty tree === balanced
+    if (root === null) {
+      return true;
+    }
+
+    //node with no subtrees === balanced
+    if (!root.left && !root.right) {
+      return true;
+    }
+
+    //node that has left and right subtrees whose heights don't differ more than one value between them is balanced,
+    if (
+      Math.abs(this.findHeight(root.left) - this.findHeight(root.right)) > 1 ||
+      !this.isBalanced(root.left) ||
+      !this.isBalanced(root.right)
+    ) {
+      return false;
+    }
+
+    // //nodes subtrees also need to be balanced, which is recursion obv
+    return this.isBalanced(root.left) && this.isBalanced(root.right);
   }
 }
