@@ -197,4 +197,20 @@ export default class {
       return findHeight(foundNode);
     }
   }
+
+  depth(value, root = this.root) {
+    if (root === null) {
+      return null;
+    }
+    if (root.data === value) {
+      return 0;
+    }
+    if (value > root.data) {
+      let recursive = this.depth(value, root.right);
+      return recursive !== null ? recursive + 1 : null;
+    } else {
+      let recursive = this.depth(value, root.left);
+      return recursive !== null ? recursive + 1 : null;
+    }
+  }
 }
