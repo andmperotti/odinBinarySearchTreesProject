@@ -141,7 +141,35 @@ export default class {
     }
   }
 
-  preOrder(callback, root = this.root) {}
+  preOrder(callback, root = this.root) {
+    if (root === null) {
+      return null;
+    }
+    if (!callback) {
+      throw new Error("Error argument is empty");
+    }
+    callback(root);
+    if (root.left !== null) {
+      this.preOrder(callback, root.left);
+    }
+    if (root.right !== null) {
+      this.preOrder(callback, root.right);
+    }
+  }
 
-  postOrder(callback, root = this.root) {}
+  postOrder(callback, root = this.root) {
+    if (root === null) {
+      return null;
+    }
+    if (!callback) {
+      throw new Error("Error argument is empty");
+    }
+    if (root.left !== null) {
+      this.postOrder(callback, root.left);
+    }
+    if (root.right !== null) {
+      this.postOrder(callback, root.right);
+    }
+    callback(root);
+  }
 }
