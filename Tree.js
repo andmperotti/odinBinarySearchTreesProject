@@ -175,9 +175,7 @@ export default class {
     callback(root);
   }
 
-  //The number of edges on the longest path from that node down to a leaf in its subtree.
   height(value, root = this.root) {
-    //so find the node first, then calculate how many subtrees it has
     let foundNode = this.find(value, root);
     if (foundNode === null) {
       return null;
@@ -220,22 +218,15 @@ export default class {
     }
   }
 
-  //when the height of a nodes left and right subtrees are only different by 1
-  //so calculate the height of node.left and node.right and if the difference is greater than 1 return false
-  //iterate through all nodes in the tree and make this calculation
-  //can't reuse height or find because they require a value.
   isBalanced(root = this.root) {
-    //empty tree === balanced
     if (root === null) {
       return true;
     }
 
-    //node with no subtrees === balanced
     if (!root.left && !root.right) {
       return true;
     }
 
-    //node that has left and right subtrees whose heights don't differ more than one value between them is balanced,
     if (
       Math.abs(this.findHeight(root.left) - this.findHeight(root.right)) > 1 ||
       !this.isBalanced(root.left) ||
@@ -243,8 +234,18 @@ export default class {
     ) {
       return false;
     }
-
-    // //nodes subtrees also need to be balanced, which is recursion obv
     return this.isBalanced(root.left) && this.isBalanced(root.right);
+  }
+
+  rebalance(root = this.root) {
+    if (root === null) {
+      return root;
+    } else if (this.isBalanced(root)) {
+      console.log("tree is already balanced");
+    } else {
+      this.arr = [];
+      this.inOrder((e) => this.arr.push(e.data));
+      this.root = this.#buildTree(this.arr, 0, this.arr.length - 1);
+    }
   }
 }
